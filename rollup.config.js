@@ -18,7 +18,10 @@ export default {
 		dir: 'public/build'
 	},
 	plugins: [
-		svelte(),
+		svelte({
+			// enable run-time checks when not in production
+			dev: !production,
+		}),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -47,7 +50,8 @@ export default {
 		production && babel({
 			extensions: ['.js', '.mjs', '.html', '.svelte'],
 			runtimeHelpers: true,
-			exclude: ['node_modules/@babel/**', 'node_modules/core-js/**']
+			exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
+			envName: 'prod'
 		}),
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

@@ -9,9 +9,9 @@
   },
   "devDependencies": {
     "@alaskaairux/icons": "^3.1.1",
-    "@alaskaairux/ods-toast": "^1.1.2",
     "@alaskaairux/ods-button": "^4.4.5",
     "@alaskaairux/ods-inputoptions": "^2.0.2",
+    "@alaskaairux/ods-toast": "^1.1.2",
     "@alaskaairux/orion-design-tokens": "^2.10.15",
     "@alaskaairux/orion-icons": "^2.1.5",
     "@alaskaairux/orion-web-core-style-sheets": "^2.9.3",
@@ -25,6 +25,7 @@
     "@testing-library/svelte": "^3.0.0",
     "@webcomponents/webcomponentsjs": "^2.4.3",
     "babel-jest": "^26.0.1",
+    "babel-plugin-dynamic-import-node": "^2.3.3",
     "core-js": "^3.6.5",
     "jest": "^26.0.1",
     "jest-environment-jsdom-sixteen": "^1.0.3",

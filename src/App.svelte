@@ -6,7 +6,16 @@
 <script>
 	import Toaster from '@alaskaairux/ods-toast/dist/toaster';
 	import '@alaskaairux/ods-toast/dist/toaster.css';
+	import { loadWebComponents, wcEnum } from './wcHelper';
+
 	export let toastDuration = null;
+
+	loadWebComponents([
+		wcEnum.auroButton,
+		wcEnum.odsCheckboxGroup,
+		wcEnum.odsInputOption,
+		wcEnum.odsToast
+	]);
 
 	const toaster = new Toaster(toastDuration);
 

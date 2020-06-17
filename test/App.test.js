@@ -5,11 +5,8 @@ import {
 } from 'query-selector-shadow-dom';
 
 import App from '../src/App';
+import { wcEnum } from '../src/wcHelper';
 
-import '@alaskaairux/ods-button/dist/auro-button';
-import '@alaskaairux/ods-inputoptions/dist/ods-inputoption';
-import '@alaskaairux/ods-inputoptions/dist/ods-inputoption-checkbox-group';
-import '@alaskaairux/ods-toast';
 
 // custom render function that allows querying of elements within a custom element
 async function renderWithCustomElements(ui, options) {
@@ -17,13 +14,26 @@ async function renderWithCustomElements(ui, options) {
     // Replace it with a function that will find elements in shadow roots
     document.body.querySelectorAll = querySelectorAllDeep;
     document.body.querySelector = querySelectorDeep;
+    window.WebComponents = { ready: true };
 
-    const renderResult = await render(ui, options);
-    replaceSlotsWithContents();
+    const renderResult = render(ui, options);
+    const elementsOnPage = Array.from(
+        document.querySelectorAll(Object.keys(wcEnum).join())
+    ).map(node => node.localName);
+    await waitForElementsToBeDefined(elementsOnPage);
+    await replaceSlotsWithContents();
     return renderResult;
 }
 
-function replaceSlotsWithContents() {
+async function waitForElementsToBeDefined(elementNames) {
+    let promises = elementNames.map(elementName => {
+        return customElements.whenDefined(elementName);
+    });
+
+    await Promise.all(promises);
+}
+
+async function replaceSlotsWithContents() {
     // testing-library does not treat text within a slot as the name of a button
     // replace all slots with their linked text node
     const slots = querySelectorAllDeep('slot');
@@ -36,8 +46,6 @@ function replaceSlotsWithContents() {
 }
 
 test('buttons and toast', async () => {
-    // not sure why I need to await
-    // does react have this problem?
     await renderWithCustomElements(App, { toastDuration: 50 });
 
     const toastButton = screen.getByRole('button', { name: 'Toast' });

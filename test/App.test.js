@@ -17,8 +17,9 @@ async function renderWithCustomElements(ui, options) {
     window.WebComponents = { ready: true };
 
     const renderResult = render(ui, options);
+    const elementNames = Object.values(wcEnum).join(', ');
     const elementsOnPage = Array.from(
-        document.querySelectorAll(Object.keys(wcEnum).join())
+        document.querySelectorAll(elementNames)
     ).map(node => node.localName);
     await waitForElementsToBeDefined(elementsOnPage);
     await replaceSlotsWithContents();

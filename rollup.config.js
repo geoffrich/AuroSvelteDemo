@@ -3,7 +3,6 @@ import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import livereload from 'rollup-plugin-livereload';
 import { terser } from 'rollup-plugin-terser';
-import autoPreprocess from 'svelte-preprocess';
 import postcss from 'rollup-plugin-postcss';
 import babel from 'rollup-plugin-babel';
 import copy from 'rollup-plugin-copy';
@@ -19,16 +18,7 @@ export default {
 		dir: 'public/build'
 	},
 	plugins: [
-		svelte({
-			// enable run-time checks when not in production
-			dev: !production,
-			// we'll extract any component CSS out into
-			// a separate file - better for performance
-			css: css => {
-				css.write('public/build/bundle.css');
-			},
-			preprocess: autoPreprocess()
-		}),
+		svelte(),
 
 		// If you have external dependencies installed from
 		// npm, you'll most likely need these plugins. In
@@ -57,19 +47,7 @@ export default {
 		production && babel({
 			extensions: ['.js', '.mjs', '.html', '.svelte'],
 			runtimeHelpers: true,
-			exclude: ['node_modules/@babel/**', 'node_modules/core-js/**'],
-			presets: [
-				['@babel/preset-env', {
-					useBuiltIns: 'usage',
-					corejs: 3
-				}]
-			],
-			plugins: [
-				'@babel/plugin-syntax-dynamic-import',
-				['@babel/plugin-transform-runtime', {
-					useESModules: true
-				}]
-			]
+			exclude: ['node_modules/@babel/**', 'node_modules/core-js/**']
 		}),
 		// In dev mode, call `npm run start` once
 		// the bundle has been generated

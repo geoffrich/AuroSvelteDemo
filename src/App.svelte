@@ -6,8 +6,9 @@
 <script>
 	import Toaster from '@alaskaairux/ods-toast/dist/toaster';
 	import '@alaskaairux/ods-toast/dist/toaster.css';
+	export let toastDuration = null;
 
-	const toaster = new Toaster();
+	const toaster = new Toaster(toastDuration);
 
 	let type = 'primary';
 	$: message = type === 'primary' ? 'message 1' : 'message 2';

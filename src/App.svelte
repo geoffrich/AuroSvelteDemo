@@ -67,9 +67,10 @@
 	<h1 class="heading--display">Web Component Demo</h1>
 	<ods-inputoption-checkbox-group
         label={`Your Choice: ${JSON.stringify(selectedOptions)}`}        
-        for="cbxDemo1">
+        for="cbxDemo1"
+		data-testid="cbxgroup">
 		{#each options as option}
-		<ods-inputoption id={option.id} label={option.label} type="checkbox" value={option.value} checked={option.checked || undefined} on:input={handleInput}></ods-inputoption>
+		<ods-inputoption data-testid={option.id} id={option.id} label={option.label} type="checkbox" value={option.value} checked={option.checked || undefined} on:input={handleInput}></ods-inputoption>
 		{/each}
 	</ods-inputoption-checkbox-group>
 
